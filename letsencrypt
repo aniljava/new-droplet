@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ -z ${DOMAIN+x} ]; then
+ echo 'export DOMAIN="xxx"'
+ exit
+fi
+
+wget 'https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh'
+chmod +x acme.sh
+./acme.sh  --issue -d $DOMAIN --standalone -d www.$DOMAIN --home ./
+cp $DOMAIN/$DOMAIN.cer ./crt.crt
+cp $DOMAIN/$DOMAIN.key ./key.key
+cp $DOMAIN/fullchain.cer ./chain.crt
