@@ -31,3 +31,10 @@ mkdir -p /ws/sites
 
 
 # Configure Postgresql
+wget https://raw.githubusercontent.com/aniljava/new-droplet/master/config/pg_hba.conf -O /etc/postgresql/9.6/main/pg_hba.conf
+service postgresql restart
+
+
+# Configure SSHD
+wget https://raw.githubusercontent.com/aniljava/new-droplet/master/config/sshd_config -O /etc/ssh/sshd_config
+service ssh restart
