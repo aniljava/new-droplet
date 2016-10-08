@@ -1,0 +1,1 @@
+Common operations in new digital ocean server.

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+apt-get update ; apt-get -y upgrade
+
+# Remove default bloat not needed in a small VM
+apt remove lvm2 mdadm lxcfs at snapd -y --purge
+
+# Install Postgresql 9.6
+echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' >>  /etc/apt/sources.list.d/pgdg.list
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+apt-get update
+apt-get -y install build-essential openssl libssl-dev libffi-dev python-dev python-pip libpq-dev postgresql-9.6
+
+
+# Install common python libraries
+pip install --upgrade pip
+pip install pyopenssl mako requests cherrypy==4.0.0 psycopg2 html2text pillow
+
+
+
+# Setup Swap
+sudo fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile      none  swap    sw    0   0' >> /etc/fstab
+mount -a
+
+# Sites setup
+mkdir -p /ws/sites
+
+
+# Configure Postgresql
